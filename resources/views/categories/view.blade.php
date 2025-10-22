@@ -1,12 +1,12 @@
-@extends('products.main', [
-    'title' => $product->code,
+@extends('categories.main', [
+    'title' => $category->code,
     'titleClasses' => ['app-cl-code'],
 ])
 
 @section('header')
     <nav>
-        <form action="{{ route('products.delete', [
-            'product' => $product->code,
+        <form action="{{ route('categories.delete', [
+            'category' => $category->code,
         ]) }}" method="post"
             id="app-form-delete">
             @csrf
@@ -14,38 +14,38 @@
 
         <ul class="app-cmp-links">
             @php
-                session()->put('bookmarks.products.view-shops', url()->full());
+                session()->put('bookmarks.categories.view-products', url()->full());
             @endphp
 
             <li>
-                <a href="{{ session()->get('bookmarks.products.view', route('products.list')) }}">
+                <a href="{{ session()->get('bookmarks.categories.view', route('categories.list')) }}">
                     <i class="material-symbols-outlined">chevron_backward</i>
                     Back
                 </a>
             </li>
-            @can('view', $product)
+            @can('view', $category)
                 <li>
                     <a
-                        href="{{ route('products.view-shops', [
-                            'product' => $product->code,
+                        href="{{ route('categories.view-products', [
+                            'category' => $category->code,
                         ]) }}">
                         <i class="material-symbols-outlined">list</i>
-                        View Shops
+                        View Products
                     </a>
                 </li>
             @endcan
-            @can('update', $product)
+            @can('update', $category)
                 <li class="app-cl-filled">
                     <a
-                        href="{{ route('products.update-form', [
-                            'product' => $product->code,
+                        href="{{ route('categories.update-form', [
+                            'category' => $category->code,
                         ]) }}">
                         <i class="material-symbols-outlined">edit_square</i>
                         Update
                     </a>
                 </li>
             @endcan
-            @can('delete', $product)
+            @can('delete', $category)
                 <li class="app-cl-warn app-cl-filled">
                     <button type="submit" form="app-form-delete" class="app-cl-link">
                         <i class="material-symbols-outlined">delete_forever</i>
@@ -61,25 +61,14 @@
     <dl class="app-cmp-data-detail">
         <dt>Code</dt>
         <dd>
-            <span class="app-cl-code">{{ $product->code }}</span>
+            <span class="app-cl-code">{{ $category->code }}</span>
         </dd>
 
         <dt>Name</dt>
         <dd>
-            {{ $product->name }}
-        </dd>
-
-        <dt>Category</dt>
-        <dd>
-            [<span class="app-cl-code">{{ $product->category->code }}</span>]
-            <span>{{ $product->category->name }}</span>
-        </dd>
-
-        <dt>Price</dt>
-        <dd>
-            <span style="display: inline-block; width: 10ch;" class="app-cl-number">{{ $product->price }}</span>
+            {{ $category->name }}
         </dd>
     </dl>
 
-    <pre>{{ $product->description }}</pre>
+    <pre>{{ $category->description }}</pre>
 @endsection
